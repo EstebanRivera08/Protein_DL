@@ -5,11 +5,13 @@
 #+end_src
 
 * Analyze MSAs
-This section focuses on the analysis of Multiple Sequence Alignments (MSAs). We start by visualizing MSAs to understand their composition and then proceed to compute and visualize amino acid probabilities.
+This section focuses on the analysis of Multiple Sequence Alignments (MSAs). We
+start by visualizing MSAs to understand their composition and then proceed to
+compute and visualize amino acid probabilities.
 
 Read and visualize the unaligned sequences. This provides a raw view of
 sequences before any alignment process.
-#+begin_src python :file ./img/seq_plot.png :results file
+#+begin_src python
 from src.logo import draw_msa
 from src.seq_io import read_fasta
 import matplotlib.pyplot as plt
@@ -33,12 +35,14 @@ plt.show()
 #+end_src
 
 #+RESULTS:
+: None
+
 [[file:./img/seq_plot.png]]
 
 Visualize the seed MSA. This gives an aligned view of the sequences,
 highlighting similarities and differences.
 
-#+begin_src python :file ./img/msa_plot.png :results file
+#+begin_src python
 from src.logo import draw_msa
 from src.seq_io import read_fasta
 import matplotlib.pyplot as plt
@@ -55,12 +59,14 @@ plt.show()
 #+end_src
 
 #+RESULTS:
-[[file:./img/msa_plot.png]]
+: None
+
+file:./img/msa_plot.png
 
 Visualize amino acid probabilities for each position in the MSA. This provides
 insights into the conservation of amino acids at each position.
 
-#+begin_src python :file ./img/msa_logo.png :results file
+#+begin_src python
 from src.logo import draw_msa, draw_logo
 from src.seq_io import read_fasta, compute_freq, msa_2_num
 import matplotlib.pyplot as plt
@@ -76,6 +82,9 @@ plt.show()
 #+end_src
 
 #+RESULTS:
+: None
+
+
 [[file:./img/msa_logo.png]]
 
 * SVD visual
@@ -87,7 +96,7 @@ the most important features of our sequences.
 
 Perform SVD on the MSA data and visualize the sequences in a reduced
 dimensionality space using the first two principal components.
-#+begin_src python :session *svd* :file ./img/svd_pfam.png :results file
+#+begin_src python :session *svd*
 from src.svd.svd_analysis import SVD
 from src.seq_io import read_fasta, compute_freq, msa_2_num, trim_msa
 import matplotlib.pyplot as plt
@@ -122,11 +131,10 @@ plt.savefig("./img/svd_pfam.png", dpi=300, transparent=True)
 plt.show()
 #+end_src
 
-#+RESULTS:
-[[file:./img/svd_pfam.png]]
+file:./img/svd_pfam.png
 
-# Visualize the dominant singular vector from the SVD. This provides insights into the most influential features or positions in the MSA sequences.
-Plot the dominant singular vector
+Visualize the dominant singular vector from the SVD. This provides insights into
+the most influential features or positions in the MSA sequences.
 
 #+begin_src python :session *svd* :file ./img/svd_vector.png :results file
 from src.seq_io import AA_LIST
