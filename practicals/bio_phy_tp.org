@@ -1,0 +1,118 @@
+* Protein Design with OpenMM
+
+** Installation
+Before we start, we need to ensure that all the necessary packages are
+installed.
+
+#+begin_src bash :output nil
+# Install condacolab and py3Dmol
+!pip install -q condacolab
+!pip install py3Dmol
+
+# Initialize and check condacolab
+import condacolab
+condacolab.install()
+import condacolab
+condacolab.check()
+
+# Install OpenMM using mamba
+!mamba install -q openmm
+
+# Test OpenMM installation
+from simtk.testInstallation import main
+main()
+#+end_src
+
+** Designing a Sequence by Hand
+Let's start by designing a protein sequence manually. We'll take a wild-type
+sequence and mutate it to a new sequence. Then, we'll apply these mutations to
+the x-ray protein structure.
+
+#+begin_src python :results output
+# Import necessary modules
+from src.seq_io import RAA_DIC
+from pdbfixer.pdbfixer import PDBFixer
+from openmm.app import PDBFile
+
+# Define wild-type and new sequences
+wt_seq =  "NLYIQWLKDGGPSSGRPPPS"
+new_seq = "AAAAAAAAAAAAAAAAAAAA"
+
+# Generate mutations list
+mutations = [f"{RAA_DIC[o]}-{i+1}-{RAA_DIC[n]}" for i, (o, n) in enumerate(zip(wt_seq, new_seq))]
+
+# Apply mutations to the protein structure
+fixer = PDBFixer(filename="./data/1l2y.pdb")
+fixer.applyMutations(mutations, "A")
+fixer.findMissingResidues()
+fixer.findMissingAtoms()
+fixer.addMissingAtoms()
+fixer.addMissingHydrogens(7.0)
+PDBFile.writeFile(fixer.topology, fixer.positions, open("out/test-fixed.pdb", "w"))
+#+end_src
+
+#+RESULTS:
+
+** Performing an Implicit Solvent Simulation
+Next, we'll perform a simulation in an implicit solvent environment (Generalized
+Born solvent model). This will allow us to observe the behavior of our designed
+protein in a simulated environment.
+
+We perform here a simple molecular dynamics simulation solving the equation of
+motion at room temperature.
+
+#+begin_src python
+# Import necessary modules
+from openmm.app import *
+from openmm import *
+from openmm.unit import *
+from sys import stdout
+
+# Load the protein structure
+pdb = PDBFile("data/test-fixed.pdb")
+
+# Define forcefield and system parameters
+forcefield = ForceField("amber14-all.xml", "implicit/gbn2.xml")
+system = forcefield.createSystem(pdb.topology, nonbondedMethod=NoCutoff, nonbondedCutoff=1*nanometer, constraints=HBonds)
+
+# Initialize the simulation
+integrator = LangevinMiddleIntegrator(400*kelvin, 1/picosecond, 0.004*picoseconds)
+simulation = Simulation(pdb.topology, system, integrator)
+simulation.context.setPositions(pdb.positions)
+simulation.minimizeEnergy()
+
+# Add reporters to save simulation data
+simulation.reporters.append(PDBReporter("out/output.pdb", 1000))
+simulation.reporters.append(StateDataReporter(stdout, 1000, step=True, potentialEnergy=True, temperature=True))
+
+# Run the simulation
+simulation.step(50000)
+#+end_src
+
+#+RESULTS:
+
+** Visualizing the Structure
+Finally, let's visualize the structure of our designed protein. This will give
+us insights into the conformation and arrangement of the protein's backbone.
+
+Is your protein still folded?
+
+#+begin_src python
+# Import necessary modules
+import matplotlib.pyplot as plt
+from openmm.app import PDBFile
+
+# Load the protein structure
+pdb = PDBFile("out/test-fixed.pdb")
+
+# Extract backbone atom positions
+bb_atoms = [i for i, el in enumerate(pdb.getTopology().atoms()) if el.name in ["N", "C", "O"]]
+bb_pos = pdb.getPositions(True, frame=0)[bb_atoms, :]
+
+# Plot the protein structure
+fig = plt.figure()
+ax = fig.add_subplot(projection='3d')
+ax.scatter(bb_pos[:, 0], bb_pos[:, 1], bb_pos[:, 2])
+ax.plot(bb_pos[:, 0], bb_pos[:, 1], bb_pos[:, 2])
+plt.show()
+#+end_src

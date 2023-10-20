@@ -1,0 +1,168 @@
+#+startup: beamer
+
+#+LaTeX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation,smaller]
+#+OPTIONS:   H:2 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t title:nil
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+EXPORT_FILE_NAME: pdfs/deep_learning.pdf
+#+beamer_theme: MIS
+
+* Transitioning from ML to DL
+** Why Deep Learning?
+*** ML vs. DL
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- **Complexity**: DL excels with complex data (images).
+- **Data Size**: Takes advantage of big data (Uniprot $\gt 10^8$ sequences).
+- **Automatic Features**: No manual feature crafting needed.
+- **Superiority**: Outperforms ML in image and text generation.
+- **End-to-End**: Direct input-output, e.g., AlphaFold for protein folding.
+
+*** 
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+file:./img/midjourney.jpg
+(generated with midjourney)
+
+** Application of DL in biology
+#+begin_center
+\Large AlphaFold, AI to predict the fold of globular proteins at the experimental accuracy
+#+end_center
+
+file:./img/AlphaFold_2.png
+
+J. Jumper /et al/, 2020, Nature
+(And \gt 50 years of data collection)
+
+** What are the DL techniques used in protein sequence generation?
+
+#+BEGIN_CENTER
+\Large \textbf{Generative models to sample sequences}
+#+END_CENTER
+** Deep Generative Models
+
+- **VAEs**: Probabilistic; encoder-decoder structure.
+- **GANs**: Generator vs. discriminator competition.
+- **RBMs**: Energy-based with visible/hidden layers.
+- **Normalizing Flows**: Complex distribution transformations.
+- **Autoregressive**: Sequence prediction.
+- **Energy-Based Models (EBMs)**: Learn energy functions.
+
+#+BEGIN_CENTER
+#+attr_latex: :scale 0.5
+file:./img/all_generative_models.jpg
+#+END_CENTER
+
+** Variational Autoencoders (VAEs) in Protein Design
+*** VAEs: A Deep Learning Approach for Proteins
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+
+- VAEs: Generative models that learn to encode and decode data.
+- Difference from standard autoencoders: Introduces probabilistic encoding.
+- Application: Generating functional protein sequences efficiently.
+
+*** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+file:./img/VAE.png
+#+END_CENTER
+
+** Variational autoencoder framework [Ding /et al/, 2020, Nat. Com.]
+file:img/vae_scheme.png
+- Linear dense NN: $H = W\times S + b$
+- Activation function: $ReLU(H_i) = max(0, H_i)$
+- Output function: $Softmax(X) = \hat{S} = \frac{exp\{X_i\}}{\sum\limits_{j}exp{X_j}}$
+- $Z \sim \mathcal{N}(\mu=0, \sigma^2=Id)$
+\begin{equation}
+\begin{split}
+  ELBO(\theta, \phi) &= \sum\limits_{Z} q_{\phi}(Z|X) \text{log} p_{\theta}(X|Z) - \sum\limits_{Z} q_{\phi}(Z|X) \text{log} \frac{q_{\phi}(Z|X)}{p_{\theta}(Z)}\\
+  ELBO(\theta, \phi) &= <\mathcal{L}(\hat{S})> - D_{KL}(Encoder(S)||\mathcal{N}(Z|\mu, \sigma^2))
+\end{split}
+\end{equation}
+
+** Training of a VAE
+*** Architecture chosen by 5-fold cross validation
+- 1 \times hidden (linear) layer fully connected (Encoder and Decoder)
+- 512 units per hidden layer
+- Latent space dimension = 10
+- Parameter space (W) dense layer: L \times 21 \times 512 \rightarrow 10^6
+*** Training
+:PROPERTIES:
+:BEAMER_ENV: ignoreheading
+:END:
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:BEAMER_ENV: block
+:END:
+- Re-weigting sequences (reduce redundancy and emphasize diversity)
+- 10^{4} optimization steps (ADAM optimizer)
+- Regularization
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:BEAMER_ENV: block
+:END:
+[Ding /et al/, 2020, Nat. Com.]
+file:img/proj_prot_ding.png
+
+** Use a structure predictor to deduce sequences
+
+#+BEGIN_CENTER
+\Large \textbf{AlphaFold is so good at predicting the structure, can't we just
+invert it?}
+
+Yes, we can!
+#+END_CENTER
+
+** AlphaFold structure prediction
+
+file:./img/AlphaFold_2.png
+
+End-to-End prediction model accounting for evolutionary information as well as
+geometric information \rightarrow Any parameter on the way is differentiable,
+even the input sequences.
+
+** AlphaFold: inverting the prediction
+
+Prediction of a structure's fold.
+file:./img/af_1.png
+
+(J. Jumper /et al/, 2020, Nature)
+** AlphaFold: inverting the prediction
+
+Compare the prediction to the true structure and update accordingly the
+parameters of AlphaFold using the *gradient* of the loss function.
+
+file:./img/af_2.png
+
+** AlphaFold: inverting the prediction
+
+**To design**: use the gradient with respect to the input only to search for
+sequences that give the correct fold.
+
+file:./img/af_3.png
+(Norm /et al/, 2021, PNAS)
+** Reverting AlphaFold
+Encode the structure into distance matrices (D_{i,j} = distance between residues
+i and j).
+file:./img/af_optim_real.png
+(Norm /et al/, 2021, PNAS)
+** Why doing so?
+
+- Positive design: searching for sequences that fold into the target structure.
+- Negative design: searching for sequences that fold *only* into the target structure.
+
+#+attr_latex: :scale 0.7
+file:./img/af_landscape_optimization.png
+
+(Norm /et al/, 2021, PNAS)
+** TODO Graph neural network to design proteins conditioned on the structure

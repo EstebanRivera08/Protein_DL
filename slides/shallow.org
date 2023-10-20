@@ -1,0 +1,234 @@
+#+startup: beamer
+
+#+LaTeX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation,smaller]
+#+OPTIONS:   H:2 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t title:nil
+#+SELECT_TAGS: export
+#+EXCLUDE_TAGS: noexport
+#+EXPORT_FILE_NAME: pdfs/shallow.pdf
+#+beamer_theme: MIS
+
+* SHALLOW PART
+
+** Challenges of Physics-Based Approaches
+- **Computational Intensity**: Demanding molecular dynamics simulations.
+- **Incomplete Modeling**: Often neglects complex environmental interactions.
+
+** Nature's Blueprint
+- **Evolutionary optimization**: Natural proteins are optimized to the physical
+  diffusion limits.
+- **Homology Modeling**: Borrowing structures from evolutionarily related proteins.
+- **Evolutionary Couplings**: Pinpointing residues crucial for function.
+- **Advantages**:
+  + Sidestep computational hurdles.
+  + Tap into nature's tried-and-tested designs.
+
+* MSA now
+
+** How to extract these fined-tuend proteins, and what to do?
+
+#+BEGIN_CENTER
+\Large \textbf{Given a target natural function, search for natural counterparts}
+#+END_CENTER
+
+** Typical approach
+
+#+BEGIN_CENTER
+\Large
+1) Search natural counterparts for a targeted function.
+2) Extract statistical signature from the collection of natural sequences.
+3) Use the statistical signature to sample novel sequences.
+#+END_CENTER
+
+** Multiple Sequence Alignments (MSAs) - the data
+- Definition: Aligning multiple sequences to identify regions of similarity.
+- Importance in bioinformatics:
+  + Studying phylogenetics and evolutionary processes.
+  + Identifying protein domains.
+
+#+BEGIN_CENTER
+file:./img/msa.png
+#+END_CENTER
+
+** Multiple Sequence Alignments (MSAs) - the data
+*** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- Information extraction from MSAs:
+  + Phylogenetic trees: Tracing evolutionary pathways.
+  + Functional domains & conserved motifs: Identifying patterns.
+  + Critical residues for protein function or stability.
+- Popular tools & databases for MSAs:
+  + Clustal: Widely used for sequence alignment.
+  + Pfam: Database of protein families based on MSAs.
+  + Uniprot: Comprehensive protein database.
+
+*** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+file:./img/pfam.png
+#+END_CENTER
+
+** Encoding MSAs for numerical use
+- MSA is discrete qualitative data type
+
+#+BEGIN_CENTER
+\textbf{How to use them?}
+#+END_CENTER
+
+*** Encoding
+  - One-hot:
+\begin{equation*}
+\begin{split}
+A \rightarrow \begin{pmatrix} 1\\ 0\\ \dots \\ 0\\ 0 \end{pmatrix},
+C \rightarrow \begin{pmatrix} 0\\ 1\\ \dots \\ 0\\ 0 \end{pmatrix},
+\dots
+G \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 1\\ 0 \end{pmatrix},
+U \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
+\end{split}
+\end{equation*}
+  - Random projection
+  - Deep learning embeddings
+
+** Let's look at the distribution of sequences
+
+#+BEGIN_CENTER
+\Large \textbf{Since we have numerical data, we can also use dimensionality reduction techniques}
+#+END_CENTER
+
+* Visualization
+** Singular Value Decomposition (SVD) for Protein Data
+*** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- **Application**: Extracting meaningful patterns from vast protein datasets.
+- **Dimensionality Reduction**: Simplifies complex data, retaining essential information.
+- **Pattern Recognition**: Reveals underlying structures and relationships in protein data.
+
+*** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+file:./img/svd_pfam.png
+#+END_CENTER
+
+** Mathematics behind SVD
+*** Introduction
+- Fundamental technique in linear algebra.
+- Decomposes a matrix into three other matrices.
+- Widely used in data compression, noise reduction, and more.
+
+*** Mathematical Representation
+- Given a matrix \( MSA \):
+  \[ MSA = U \Sigma V^T \]
+  Where:
+  + \( U \) - Left singular vectors (orthogonal matrix).
+  + \( \Sigma \) - Diagonal matrix of singular values.
+  + \( V^T \) - Transpose of right singular vectors (orthogonal matrix).
+
+** What's in those singular vectors ?
+***
+- The right singular vectors correspond to compositional motifs (in terms of
+  sequences).
+
+#+BEGIN_CENTER
+file:./img/svd_pfam_vec_1.png
+#+END_CENTER
+
+** Sample compositional motifs
+
+#+BEGIN_CENTER
+\Large \textbf{Sample the compositional motifs observed in the MSA to form novel sequences}
+#+END_CENTER
+
+** Sequence Generation using SVD
+- Concept of reverse mapping: Generating functional sequences from
+  reduced-dimensional data.
+
+#+BEGIN_CENTER
+file:./img/svd_design.png
+#+END_CENTER
+
+Introduce a Gaussian blank noise to sample the PCs:
+
+\begin{equation*}
+\begin{split}
+\tilde{U} =  U + \mathcal{N}(0, 1)\\
+\hat{MSA} = \tilde{U} \Sigma V^T
+\end{split}
+\end{equation*}
+
+* DCA
+** A pairwise model borrowed from statistical physics
+
+#+BEGIN_CENTER
+\Large \textbf{Direct coupling analysis}
+#+END_CENTER
+
+F. Morcos /et al/, PNAS 2011
+
+** Markov Random Field for Protein Analysis
+- Parametrize a probability distribution describing the distribution of sequences.
+- Decompose the complex distribution of sequences into a pairwise potential ---
+  the Potts model.
+
+#+BEGIN_CENTER
+file:./img/dca_image.png
+#+END_CENTER
+
+** Mathematics behind Random Markov Fields
+*** MSA probabilistic model [Morcos /et al/, PNAS, 2011]
+- Probability associated to a Sequence given a MSA:
+\begin{equation*}
+P_{\mathcal{H}}(S) \propto \text{exp}\{-\beta \times \mathcal{H}(S)\}
+\end{equation*}
+- Energy of a sequence (Potts models):
+\begin{equation*}
+\mathcal{H}(S) = \displaystyle\sum_{i} h_i(S_i) + \displaystyle\sum_{i<j} J_{ij}(S_i,S_j)
+\end{equation*}
+- Energy parameters:
+  - $\mathcal{H} = \{h_i; J_{ij}\}$ (lookup table)
+  - Parameter space: $5 \times L + 5^2 \times \frac{L \times (L - 1)}{2} = 464165$
+
+** Initial applications of DCA
+Contact predictions based on coupling terms $J_{ij}$:
+\begin{equation*}
+F_{ij} &= \sqrt{\sum J_{ij}(A,B)^2} \;\;\; \rightarrow \;\;\; F^{APC}_{ij} &= F_{ij} - \frac{F_{i.}F_{.j}}{F_{..}}
+\end{equation*}
+
+** DCA learning technique
+*** Turn into an optimization procedure
+- Fit low-order statistics such as $f_i$ and $f_{ij}$: Find $\mathcal{H}$ such that:
+\begin{equation*}
+\hat{f}_{i}(A) = f_i(A)\;\;\; ; \;\;\; \hat{f}_{ij}(A,B) = f_{ij}(A,B)
+\end{equation*}
+
+*** Boltzmann machine learning [Figliuzzi /et al/, Mol. Biol Ev., 2018; Cuturello /et al/, RNA, 2020]
+
+Initialize with a guess for $\mathcal{H}$ (could be zeros)
+1) Generate a sample given $\mathcal{H}$ (MCMC) and compute $\hat{f}_{i},
+  \hat{f}_{ij}$
+2) $\mathcal{H}$ parameters are updated following the *log-likelihood*
+\begin{equation*}
+h_i(A) \leftarrow h_i(A) + \eta (\hat{f}_{i}(A) - f_i(A))
+\end{equation*}
+
+** Sequence Generation using Random Markov Field
+- Sampling sequences: sampling new protein variants.
+- Ensuring biological relevance: Satisfying coevolutionary constraints.
+
+Perform mutations:
+#+BEGIN_CENTER
+#+attr_latex: :scale 0.3
+file:./img/mcmc_seq.png
+#+END_CENTER
+
+Select using the parametrized distribution:
+\begin{equation*}
+P_{\mathcal{H}}(S) \propto \text{exp}\{-\beta \times \mathcal{H}(S)\}
+\end{equation*}

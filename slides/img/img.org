@@ -1,0 +1,74 @@
+* plot MSAs
+
+#+begin_src python :results output
+from Bio import Phylo
+from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
+from Bio import AlignIO, SeqIO
+from Bio.Align import MultipleSeqAlignment
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+
+# Define colors for amino acids
+# Clustal color scheme for amino acids
+clustal_colors = {
+    'A': 'orange', 'L': 'orange', 'I': 'orange', 'M': 'orange', 'V': 'orange',
+    'F': 'blue', 'Y': 'blue', 'W': 'blue',
+    'K': 'red', 'R': 'red', 'H': 'red',
+    'D': 'green', 'E': 'green', 'N': 'green', 'Q': 'green',
+    'S': 'pink', 'T': 'pink',
+    'C': 'yellow', 'G': 'orange', 'P': 'yellow'
+}
+
+# Create a sample MSA with protein sequences
+align = AlignIO.read("../../practicals/data/PF00042_seed.txt", "fasta")
+
+
+# # Plot MSA
+# fig, ax = plt.subplots(figsize=(10, 4))
+# ax.set_facecolor('black')  # Jalview-like background
+# for i, seq in enumerate(align):
+#     ax.text(0.1, len(align)-i-1, seq.id, ha='right', color='white')
+#     for j, res in enumerate(seq.seq):
+#         bg_color = clustal_colors.get(res, 'white')  # Default to white if residue not recognized
+#         rect = patches.Rectangle((j+0.5, len(align)-i-3), 1, 1, edgecolor='none', facecolor=bg_color)
+#         ax.add_patch(rect)
+#         ax.text(j, len(align)-i-1, res, ha='center', va='center', color='black', fontsize=10, fontweight='bold')
+
+# ax.set_xlim(0, len(align[0]))
+# ax.set_ylim(0, len(align))
+# ax.axis('off')
+# plt.tight_layout()
+# # plt.savefig("msa_protein_example.png")
+# plt.show()
+
+for i, seq in enumerate(align):
+    seq.name = str(i)
+    seq.id = str(i)
+
+# Calculate the distance matrix and construct the phylogenetic tree
+calculator = DistanceCalculator('blosum62')  # Using BLOSUM62 matrix for protein sequences
+dm = calculator.get_distance(align)
+
+
+constructor = DistanceTreeConstructor()
+tree = constructor.upgma(dm)
+
+# Plot the tree
+plt.rcParams["font.size"] = 3
+fig, ax = plt.subplots(1, figsize=(3, 3))
+ax.set_xticks([])
+ax.set_yticks([])
+for axis in ['top','right', "bottom", "left"]:
+    ax.spines[axis].set_visible(False)
+
+for spine in ax.spines.values():
+    spine.set_linewidth(0.3)  # Set the line width to 2
+Phylo.draw(tree, axes=ax, branch_labels=lambda c: "")
+plt.savefig("phylogenetic_tree_protein.png", dpi=300)
+plt.show()
+#+end_src
+
+#+RESULTS:

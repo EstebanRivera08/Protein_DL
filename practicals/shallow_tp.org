@@ -1,0 +1,244 @@
+* Installation
+
+#+begin_src bash
+! pip install scipy numpy matplotlib
+#+end_src
+
+* Analyze MSAs
+This section focuses on the analysis of Multiple Sequence Alignments (MSAs). We start by visualizing MSAs to understand their composition and then proceed to compute and visualize amino acid probabilities.
+
+Read and visualize the unaligned sequences. This provides a raw view of
+sequences before any alignment process.
+#+begin_src python :file ./img/seq_plot.png :results file
+from src.logo import draw_msa
+from src.seq_io import read_fasta
+import matplotlib.pyplot as plt
+
+# Read the fasta file containing the sequences
+msa = read_fasta("./data/PF00042_seed_unaligned.txt")
+
+# Calculate the length of each sequence
+all_len = [len(s) for s in msa.values()]
+max_len = max(all_len)
+
+# Pad the sequences to ensure they have the same length for visualization
+pad_seq = [s+ "-"*(max_len-len(s)) for s in msa.values()]
+
+# Plot the padded sequences
+fig, ax = plt.subplots(1, figsize=(8, 1))
+draw_msa(pad_seq, ax)
+plt.tight_layout()
+plt.savefig("./img/seq_plot.png")
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./img/seq_plot.png]]
+
+Visualize the seed MSA. This gives an aligned view of the sequences,
+highlighting similarities and differences.
+
+#+begin_src python :file ./img/msa_plot.png :results file
+from src.logo import draw_msa
+from src.seq_io import read_fasta
+import matplotlib.pyplot as plt
+
+# Read the fasta file containing the aligned sequences
+msa = read_fasta("./data/PF00042_seed.txt")
+
+# Plot the aligned sequences
+fig, ax = plt.subplots(1, figsize=(8, 1))
+draw_msa(msa, ax)
+plt.tight_layout()
+plt.savefig("./img/msa_plot.png")
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./img/msa_plot.png]]
+
+Visualize amino acid probabilities for each position in the MSA. This provides
+insights into the conservation of amino acids at each position.
+
+#+begin_src python :file ./img/msa_logo.png :results file
+from src.logo import draw_msa, draw_logo
+from src.seq_io import read_fasta, compute_freq, msa_2_num
+import matplotlib.pyplot as plt
+
+# Read the fasta file containing the aligned sequences
+msa = read_fasta("./data/PF00042_seed.txt")
+
+# Plot the sequence logo showcasing the amino acid probabilities
+fig, ax = plt.subplots(1, figsize=(8, 2))
+draw_logo(msa, ax)
+plt.savefig("./img/msa_logo.png")
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./img/msa_logo.png]]
+
+* SVD visual
+
+This section deals with Singular Value Decomposition (SVD), a method used to
+decompose a matrix into singular vectors and singular values. We use SVD to
+reduce the dimensionality of our data and visualize it, allowing us to capture
+the most important features of our sequences.
+
+Perform SVD on the MSA data and visualize the sequences in a reduced
+dimensionality space using the first two principal components.
+#+begin_src python :session *svd* :file ./img/svd_pfam.png :results file
+from src.svd.svd_analysis import SVD
+from src.seq_io import read_fasta, compute_freq, msa_2_num, trim_msa
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+
+# Read the fasta file containing the sequences
+msa = read_fasta("./data/PF00042_rp15.txt")
+ref_name = "A0A7M7G143/184-300"
+ref_seq = msa[ref_name]
+
+# Trim the MSA sequences based on the reference sequence
+msa_trim, ref_seq = trim_msa(list(msa.values()), ref_seq)
+
+# Apply the SVD on the trimmed MSA data
+proj, svd_out, pca_dir = SVD(msa_trim)
+
+# Compute the KDE (Kernel Density Estimation) for visualization
+kde = gaussian_kde(proj[:, [0, 1]].T)
+
+# Evaluate the KDE on a regular grid
+z = kde(proj[:, [0, 1]].T)
+
+# Plot the projected sequences colored by their KDE values
+fig, ax = plt.subplots(figsize=(3, 3))
+ax.scatter(proj[:, 0], proj[:, 1], c=z, s=2)
+ax.set_xlabel("PC1")
+ax.set_ylabel("PC2")
+for axis in ['top','right']:
+    ax.spines[axis].set_visible(False)
+plt.tight_layout()
+plt.savefig("./img/svd_pfam.png", dpi=300, transparent=True)
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./img/svd_pfam.png]]
+
+# Visualize the dominant singular vector from the SVD. This provides insights into the most influential features or positions in the MSA sequences.
+Plot the dominant singular vector
+
+#+begin_src python :session *svd* :file ./img/svd_vector.png :results file
+from src.seq_io import AA_LIST
+from src.logo import draw_msa, draw_logo
+fig, (ax, bx) = plt.subplots(2, figsize=(7, 5))
+
+# Extract the dominant singular vector for visualization
+vec = pca_dir[:, 0].reshape(len(ref_seq), 21)[:, :-1]
+
+# Separate the positive and negative weights for visualization
+pos = [
+    [(aa, wei) for (aa, wei) in zip(AA_LIST, el) if wei >= 0]
+    for el in vec
+]
+
+neg = [
+    [(aa, wei) for (aa, wei) in zip(AA_LIST, el) if wei < 0]
+    for el in vec
+]
+
+# Visualize the dominant singular vector and its contribution for each amino acid
+ax.imshow(pca_dir[:, 0].reshape(len(ref_seq), 21)[:, :-1].T, cmap="bwr")
+draw_logo(pos, bx, counts=True)
+draw_logo(neg, bx, counts=True)
+bx.set_ylim([-0.2, 0.2])
+bx.plot([0, len(pos)], [0, 0], c="red", linestyle="--", linewidth=1)
+for axis in ['top','right']:
+    ax.spines[axis].set_visible(False)
+ax.set_yticks([])
+ax.set_ylabel("AA")
+ax.set_xlabel("Position")
+plt.tight_layout()
+plt.savefig("./img/svd_vector.png", dpi=300, transparent=True)
+plt.show()
+#+end_src
+
+#+RESULTS:
+[[file:./img/svd_vector.png]]
+
+* Sample sequences out of the dominant eigen vectors
+
+Generate sample sequences based on the dominant eigen vectors and visualize them
+in the space of the first two principal components.
+
+#+begin_src python
+from src.svd.svd_analysis import encode_align, plot_pca, SVD
+from src.svd.design import sample_seq
+from src.seq_io import read_fasta, compute_freq, msa_2_num
+import matplotlib.pyplot as plt
+
+# Read MSA data from the fasta file
+msa = read_fasta("./data/PF00042_seed.txt")
+
+# Generate 1000 sample sequences
+designs = sample_seq(msa.values(), nb=1000)
+
+# Apply SVD to the MSA and obtain the encoding of the MSA
+proj, svd_out, pca_dir, enc_msa = SVD(msa, bmsa=True)
+
+# Encode the sampled sequences
+enc_designs = encode_align(designs)
+proj_des = enc_designs @ pca_dir
+
+# Visualize both original and sampled sequences in the reduced space
+plt.scatter(proj[:, 0], proj[:, 1])
+plt.scatter(proj_des[:, 0], proj_des[:, 1])
+plt.show()
+#+end_src
+
+#+RESULTS:
+: None
+
+Visualize the distribution of amino acids in natural vs. designed sequences.
+
+#+begin_src python :session *test*
+from src.svd.svd_analysis import encode_align, plot_pca, SVD
+from src.svd.design import sample_seq
+from src.seq_io import read_fasta
+import matplotlib.pyplot as plt
+from src.logo import draw_msa, draw_logo
+
+# Read MSA data and generate 1000 sample sequences
+msa = read_fasta("./data/PF00042_seed.txt")
+designs = sample_seq(msa.values(), nb=1000)
+
+# Visualize the distribution of amino acids
+fig, (ax, bx) = plt.subplots(2, figsize=(8, 3))
+draw_logo(msa, ax)
+draw_logo(designs, bx)
+ax.set_title("Natural")
+bx.set_title("Design")
+plt.tight_layout()
+plt.show()
+#+end_src
+
+#+RESULTS:
+: None
+
+Compare the pairwise frequencies of amino acids between natural and designed
+sequences to measure how close the sequences are from the natural ones.
+
+#+begin_src python  :session *test*
+from src.svd.seq_io import pair_frequency
+freq_nat = pair_frequency(msa, ein_f=False)
+freq_design = pair_frequency(designs, ein_f=False)
+fig, ax = plt.subplots(1, figsize=(3, 3))
+ax.scatter(freq_nat, freq_design)
+ax.set_xlabel("Freq natural")
+ax.set_ylabel("Freq design")
+plt.tight_layout()
+plt.show()
+#+end_src
+
+#+RESULTS:
+: None

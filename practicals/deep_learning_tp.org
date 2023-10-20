@@ -1,0 +1,109 @@
+* Variational Autoencoders (VAEs) for Protein Design
+
+** Introduction to VAEs
+Variational Autoencoders (VAEs) are powerful generative models used in deep
+learning. In this section, we'll explore how to apply VAEs to protein design.
+
+*** Initializing the VAE Model
+Before we can train our VAE, we need to initialize it. We'll also load our
+protein sequences from a FASTA file.
+
+#+begin_src python :results output :session *dl*
+from src.svd.vae import init_model
+from src.svd.seq_io import read_fasta, encode_seq
+msa = read_fasta("./data/PF00042_rp15.txt")
+seq_list = [seq for name, seq in msa.items()]
+len_seq = len(seq_list[0])
+model = init_model(len_seq)
+# print(model)
+#+end_src
+
+*** Training the VAE
+With our model initialized, we can now proceed to train it. We'll also visualize
+the training loss to monitor the model's performance.
+
+#+begin_src python :session *dl* :results output
+from src.svd.vae import train_model
+import matplotlib.pyplot as plt
+
+loss = train_model(seq_list, model, bsize=32, nb_iter=50)
+plt.plot(loss)
+plt.show()
+#+end_src
+
+*** Generating Protein Sequences with VAE
+Once our model is trained, we can use it to generate new protein sequences.
+We'll visualize the generated sequences using a sequence logo.
+
+#+begin_src python :session *dl* :results file
+from src.svd.vae import generate_seq
+from src.logo import draw_logo
+model.eval()
+nb_seq = 1000
+designed = generate_seq(model, nb_seq)
+
+fig, ax = plt.subplots(1, figsize=(8, 2))
+draw_logo(msa, ax)
+ax.set_title("Designs VAE")
+plt.tight_layout()
+plt.savefig("./img/logo_vae.png")
+plt.show()
+#+end_src
+
+*** Analyzing Pairwise Frequencies
+To understand the quality of our generated sequences, we'll compare the pairwise
+frequencies of our designed sequences with the natural sequences.
+
+#+begin_src python :session *dl*
+from src.svd.seq_io import pair_frequency
+freq_nat = pair_frequency(seq_list)
+freq_design = pair_frequency(designed)
+fig, ax = plt.subplots(1, figsize=(3, 3))
+ax.scatter(freq_nat, freq_design)
+ax.set_xlabel("Freq natural")
+ax.set_ylabel("Freq design")
+plt.tight_layout()
+plt.savefig("./img/vae_cor.png")
+plt.show()
+#+end_src
+
+*** Visualizing the Latent Space
+The latent space of a VAE provides insights into the underlying structure of the
+data. We'll project our sequences into this space and visualize them using PCA.
+
+#+begin_src python :session *dl*
+from src.svd.vae import MSA
+import numpy as np
+bin_msa = MSA(seq_list).data.detach()
+mu, sig = model.encoder(bin_msa)
+V, W = np.linalg.eig(np.cov(mu.detach().T))
+idx = V.argsort()[::-1]
+W = W[:, idx]
+fig, ax = plt.subplots(1, figsize=(3, 3))
+pca_proj = mu.detach() @ W
+ax.scatter(pca_proj[:, 0], pca_proj[:, 1])
+ax.set_xlabel("PC1")
+ax.set_ylabel("PC2")
+plt.tight_layout()
+plt.savefig("./img/vae_pca.png")
+plt.show()
+#+end_src
+
+* TODO Secondary Structure Prediction with Deep Learning
+
+** Introduction
+Secondary structure prediction is a fundamental task in bioinformatics. In this
+section, we'll explore how to use deep learning to predict protein secondary
+structures, then revert the network to design sequences for specific secondary
+structure.
+
+*** Architecture
+
+*** Training the Model
+
+*** Testing the Model's Accuracy
+
+*** Reverting Predicted Secondary Structures to Sequences
+
+* ProteinMPNN
+[Details about the ProteinMPNN approach or model.]

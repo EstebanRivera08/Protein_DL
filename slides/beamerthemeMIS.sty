@@ -1,0 +1,72 @@
+\mode<presentation>
+
+%% \useoutertheme[subsection=false,shadow]{miniframes}
+\useoutertheme[shadow]{miniframes}
+\useinnertheme{rounded}
+
+%% define colours
+\definecolor{darkcol}{HTML}{092834}
+\definecolor{darkcol_ex}{HTML}{E0FFFF}
+\definecolor{whitecol}{HTML}{ffffff}
+
+% Title page (arguments currently ignored)
+\defbeamertemplate*{title page}{uconn}[1][]
+                   {
+                     \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par
+                     \smallskip
+                     \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par
+                     \bigskip
+                     \usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor\par
+                     \smallskip
+                     \usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par
+                     \medskip
+                     \usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate\par
+                   }
+
+% Use circle symbols for all bulleted lists
+\setbeamertemplate{items}[circle]
+\setbeamertemplate{sections/subsections in toc}[circle]
+
+%% Fonts
+\setbeamerfont{title}{shape=\scshape, size = \large}
+\setbeamerfont{title like}{shape=\scshape, size = \large}
+\setbeamerfont{author}{shape=\scshape, size = \large}
+\setbeamerfont{institute}{shape=\scshape, size = \large}
+\setbeamerfont{frametitle}{shape=\scshape, size = \normalsize}
+\setbeamerfont{block title}{shape=\scshape, size = \small}
+\setbeamerfont{block body}{size = \small}
+
+%% Color settings
+\setbeamercolor{title}{bg = darkcol, fg = whitecol}
+\setbeamercolor{frametitle}{bg = darkcol, fg = whitecol}
+
+\setbeamercolor{block title}{fg = darkcol, bg = darkcol!15!white}
+\setbeamercolor{block body}{fg = darkcol, bg = darkcol!2!white}
+
+\setbeamertemplate{theorem begin}{%
+  \setbeamertemplate{itemize items}[circle]                    % Shape of bullet-points
+  \setbeamercolor{block title}{bg=darkcol_ex!100!white}%
+  \setbeamercolor{itemize item}{fg=darkcol!100!white}%
+  \setbeamercolor{itemize subitem}{fg=darkcol!100!white}%
+  \setbeamercolor{itemize subsubitem}{fg=darkcol!100!white}%
+  \setbeamercolor{enumerate item}{fg=darkcol!100!black}%
+  \setbeamercolor{enumerate subitem}{fg=darkcol!100!black}%
+  \setbeamercolor{enumerate subsubitem}{fg=darkcol!100!black}%
+  \begin{\inserttheoremblockenv}
+    {%
+      \ifx\inserttheoremaddition\@empty\else\ \inserttheoremaddition\fi%
+    }%
+    \normalfont%
+}
+
+%% remove the headline
+\setbeamertemplate{headline}{}
+
+\setbeamertemplate{footline}{
+  \hfill%
+  \setbeamertemplate{page number in head/foot}[framenumber]%
+  \usebeamertemplate*{page number in head/foot}\kern1em\vskip2pt%
+}
+
+\beamertemplatenavigationsymbolsempty
+\mode<all>

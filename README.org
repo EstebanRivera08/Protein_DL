@@ -1,0 +1,12 @@
+* Overview
+
+Teaching material for protein design where multiple methods are introduced:
+1) biophysical models are introduced (molecular mechanics force fields,
+   molecular dynamics, thermodynamics of folding).
+2) statistical techniques like singular value decomposition, or covariance
+   models.
+3) deep learning generative models such as variational autoencoders or graph
+   neural networks.
+
+The pedagogical aim is to introduce tools that are typically used in the context
+of protein design, and to demonstrate their advantages and limits.

@@ -1,0 +1,103 @@
+#+TITLE: Protein Design Using Machine Learning
+#+AUTHOR: Your Name
+#+DATE: \today
+#+LATEX_CLASS: beamer
+#+LATEX_CLASS_OPTIONS: [presentation]
+#+BEAMER_THEME: Madrid
+
+* Introduction to Protein Design
+** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- Role in drug discovery & synthetic biology
+- Comparison:
+  + Traditional lab approaches
+  + Computational methods
+  + ML-enhanced techniques
+- Challenge: Designing functional proteins with desired properties.
+** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+[[file:path_to_intro_image][Click to view image]]
+#+END_CENTER
+
+* Data: The Power of MSAs
+** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- What are MSAs?
+  + Alignments of related sequences
+  + Captures evolutionary information
+- Importance:
+  + Vast sequence data source
+  + Inferring sequence-function relationships
+  + Insight into sequence variability
+** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+[[file:path_to_msa_image][Click to view image]]
+#+END_CENTER
+
+* Shallow Learning in Protein Design
+** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- Brief Overview:
+  + Basic statistical and mathematical tools
+  + Focus on direct sequence relationships
+- Key Techniques:
+  + PCA/SVD for data representation
+  + Random Markov Field for sequence analysis
+** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+[[file:path_to_shallow_learning_image][Click to view image]]
+#+END_CENTER
+
+* ...
+  (Continue in the above format for all the slides)
+
+* Q/A Session
+** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- Reflect on methodologies discussed
+- Share thoughts and experiences
+- Seek clarifications and deeper insights
+** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+[[file:path_to_question_mark_image][Click to view image]]
+#+END_CENTER
+
+* Further Resources
+** Content
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+- Books: 
+  + "Protein Design by ML" by Dr. A. Scientist
+  + "Deep Dive into Protein Structures" by Dr. B. Researcher
+- Research papers: 
+  + "Applications of Deep Learning in Proteomics", Journal X, 2022.
+  + "Innovative Techniques in Protein Design", Journal Y, 2023.
+- Online courses, webinars, and tutorials
+** Image
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+#+BEGIN_CENTER
+[[file:path_to_resources_image][Click to view image]]
+#+END_CENTER
