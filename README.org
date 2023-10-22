@@ -10,3 +10,8 @@ Teaching material for protein design where multiple methods are introduced:
 
 The pedagogical aim is to introduce tools that are typically used in the context
 of protein design, and to demonstrate their advantages and limits.
+
+A colab of examples for running simulation, design, and deep learning models can
+be found at:
+
+https://colab.research.google.com/drive/1yB0kbp-q2qjlCC-1yZ-9cLvvY478lrFk?usp=sharing

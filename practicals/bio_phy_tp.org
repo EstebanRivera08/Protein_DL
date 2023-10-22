@@ -103,11 +103,11 @@ import matplotlib.pyplot as plt
 from openmm.app import PDBFile
 
 # Load the protein structure
-pdb = PDBFile("out/test-fixed.pdb")
+pdb = PDBFile("out/output.pdb")
 
 # Extract backbone atom positions
 bb_atoms = [i for i, el in enumerate(pdb.getTopology().atoms()) if el.name in ["N", "C", "O"]]
-bb_pos = pdb.getPositions(True, frame=0)[bb_atoms, :]
+bb_pos = pdb.getPositions(True, frame=100)[bb_atoms, :]
 
 # Plot the protein structure
 fig = plt.figure()
@@ -116,3 +116,6 @@ ax.scatter(bb_pos[:, 0], bb_pos[:, 1], bb_pos[:, 2])
 ax.plot(bb_pos[:, 0], bb_pos[:, 1], bb_pos[:, 2])
 plt.show()
 #+end_src
+
+#+RESULTS:
+: None
