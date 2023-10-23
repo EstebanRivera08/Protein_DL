@@ -117,9 +117,7 @@ file:img/proj_prot_ding.png
 ** Use a structure predictor to deduce sequences
 
 #+BEGIN_CENTER
-\Large \textbf{AlphaFold is so good at predicting the structure, can't we just
-invert it?}
-
+\Large \textbf{AlphaFold is so good at predicting the structure, can't we just invert it?}
 Yes, we can!
 #+END_CENTER
 
@@ -165,4 +163,144 @@ file:./img/af_optim_real.png
 file:./img/af_landscape_optimization.png
 
 (Norm /et al/, 2021, PNAS)
-** TODO Graph neural network to design proteins conditioned on the structure
+
+** Graph neural network to model the structure
+
+#+BEGIN_CENTER
+\Large \textbf{Represent protein structures using graph neural networks}
+Yes, we can!
+#+END_CENTER
+** Design proteins conditioned on the structure
+
+file:./img/proteinmpnn.jpg
+[Dauparas /et al/, Science, 2022]
+
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p1.png
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p2.png
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p3.png
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p4.png
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p5.png
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p6.png
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 1
+:END:
+file:img/p7.png
+
+Predict a molecular property using the contextualized node vectors, for example,
+the binding free energy to a protein target.
+
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+
+file:img/p8.png
+
+Mask the identity of one atom...
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
+** Graph neural network
+
+**** Training paramerters
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/p9.png
+
+...predict back the identity of the masked atom.
+
+**** Latent space representation of sequence space
+:PROPERTIES:
+:BEAMER_COL: 0.5
+:END:
+file:img/mol_graph.png
+[Gilmer /et al/, ICML, 2017]
