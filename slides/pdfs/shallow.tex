@@ -1,4 +1,4 @@
-% Created 2023-10-19 Thu 13:06
+% Created 2023-10-23 Mon 23:00
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation,smaller]{beamer}
 \usepackage[utf8]{inputenc}
@@ -20,16 +20,16 @@
 
 
 \section*{SHALLOW PART}
-\label{sec:orge8e0202}
+\label{sec:org8373cf6}
 
-\begin{frame}[label={sec:org6ce3491}]{Challenges of Physics-Based Approaches}
+\begin{frame}[label={sec:orgd2983e0}]{Challenges of Physics-Based Approaches}
 \begin{itemize}
 \item \alert{\alert{Computational Intensity}}: Demanding molecular dynamics simulations.
 \item \alert{\alert{Incomplete Modeling}}: Often neglects complex environmental interactions.
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:orgce5a65b}]{Nature's Blueprint}
+\begin{frame}[label={sec:org45a2c8d}]{Nature's Blueprint}
 \begin{itemize}
 \item \alert{\alert{Evolutionary optimization}}: Natural proteins are optimized to the physical
 diffusion limits.
@@ -44,15 +44,15 @@ diffusion limits.
 \end{frame}
 
 \section*{MSA now}
-\label{sec:org9418fcf}
+\label{sec:org8cd3381}
 
-\begin{frame}[label={sec:orgc572c71}]{How to extract these fined-tuend proteins, and what to do?}
+\begin{frame}[label={sec:orgdabadae}]{How to extract these fined-tuend proteins, and what to do?}
 \begin{center}
 \Large \textbf{Given a target natural function, search for natural counterparts}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org55818f2}]{Typical approach}
+\begin{frame}[label={sec:org91b69ee}]{Typical approach}
 \begin{center}
 \Large
 \begin{enumerate}
@@ -63,7 +63,7 @@ diffusion limits.
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org5106b5e}]{Multiple Sequence Alignments (MSAs) - the data}
+\begin{frame}[label={sec:org9d42c83}]{Multiple Sequence Alignments (MSAs) - the data}
 \begin{itemize}
 \item Definition: Aligning multiple sequences to identify regions of similarity.
 \item Importance in bioinformatics:
@@ -80,7 +80,7 @@ diffusion limits.
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org1213ddf}]{Multiple Sequence Alignments (MSAs) - the data}
+\begin{frame}[label={sec:org84684a9}]{Multiple Sequence Alignments (MSAs) - the data}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{itemize}
@@ -109,7 +109,7 @@ diffusion limits.
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgdd74f12}]{Encoding MSAs for numerical use}
+\begin{frame}[label={sec:orgc02bc99}]{Encoding MSAs for numerical use}
 \begin{itemize}
 \item MSA is discrete qualitative data type
 \end{itemize}
@@ -127,8 +127,8 @@ diffusion limits.
 A \rightarrow \begin{pmatrix} 1\\ 0\\ \dots \\ 0\\ 0 \end{pmatrix},
 C \rightarrow \begin{pmatrix} 0\\ 1\\ \dots \\ 0\\ 0 \end{pmatrix},
 \dots
-G \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 1\\ 0 \end{pmatrix},
-U \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
+Y \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 1\\ 0 \end{pmatrix},
+W \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
 \end{split}
 \end{equation*}
 \begin{itemize}
@@ -138,15 +138,15 @@ U \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgeb8526c}]{Let's look at the distribution of sequences}
+\begin{frame}[label={sec:org197a352}]{Let's look at the distribution of sequences}
 \begin{center}
 \Large \textbf{Since we have numerical data, we can also use dimensionality reduction techniques}
 \end{center}
 \end{frame}
 
 \section*{Visualization}
-\label{sec:org4b50ab4}
-\begin{frame}[label={sec:org55e77d4}]{Singular Value Decomposition (SVD) for Protein Data}
+\label{sec:org7c93b1f}
+\begin{frame}[label={sec:orgfde59d5}]{Singular Value Decomposition (SVD) for Protein Data}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{itemize}
@@ -166,7 +166,7 @@ U \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgdee918f}]{Mathematics behind SVD}
+\begin{frame}[label={sec:orgef59855}]{Mathematics behind SVD}
 \begin{block}{Introduction}
 \begin{itemize}
 \item Fundamental technique in linear algebra.
@@ -189,7 +189,7 @@ Where:
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org4cae804}]{What's in those singular vectors ?}
+\begin{frame}[label={sec:org970da9f}]{What's in those singular vectors ?}
 \alert{*}
 \begin{itemize}
 \item The right singular vectors correspond to compositional motifs (in terms of
@@ -203,13 +203,13 @@ sequences).
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orga8672fe}]{Sample compositional motifs}
+\begin{frame}[label={sec:org9d0e309}]{Sample compositional motifs}
 \begin{center}
 \Large \textbf{Sample the compositional motifs observed in the MSA to form novel sequences}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgf09a4f6}]{Sequence Generation using SVD}
+\begin{frame}[label={sec:orge56b6f3}]{Sequence Generation using SVD}
 \begin{itemize}
 \item Concept of reverse mapping: Generating functional sequences from
 reduced-dimensional data.
@@ -232,8 +232,8 @@ Introduce a Gaussian blank noise to sample the PCs:
 \end{frame}
 
 \section*{DCA}
-\label{sec:orgb5729df}
-\begin{frame}[label={sec:org14cb99f}]{A pairwise model borrowed from statistical physics}
+\label{sec:orgaae71fa}
+\begin{frame}[label={sec:orgb0f234e}]{A pairwise model borrowed from statistical physics}
 \begin{center}
 \Large \textbf{Direct coupling analysis}
 \end{center}
@@ -241,7 +241,7 @@ Introduce a Gaussian blank noise to sample the PCs:
 F. Morcos \emph{et al}, PNAS 2011
 \end{frame}
 
-\begin{frame}[label={sec:org4de885d}]{Markov Random Field for Protein Analysis}
+\begin{frame}[label={sec:orgb55a935}]{Markov Random Field for Protein Analysis}
 \begin{itemize}
 \item Parametrize a probability distribution describing the distribution of sequences.
 \item Decompose the complex distribution of sequences into a pairwise potential ---
@@ -255,7 +255,7 @@ the Potts model.
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgb9656e4}]{Mathematics behind Random Markov Fields}
+\begin{frame}[label={sec:org17a6da8}]{Mathematics behind Random Markov Fields}
 \begin{block}{MSA probabilistic model [Morcos \emph{et al}, PNAS, 2011]}
 \begin{itemize}
 \item Probability associated to a Sequence given a MSA:
@@ -279,14 +279,14 @@ P_{\mathcal{H}}(S) \propto \text{exp}\{-\beta \times \mathcal{H}(S)\}
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgc2b8dae}]{Initial applications of DCA}
+\begin{frame}[label={sec:org68aa3de}]{Initial applications of DCA}
 Contact predictions based on coupling terms \(J_{ij}\):
 \begin{equation*}
 F_{ij} &= \sqrt{\sum J_{ij}(A,B)^2} \;\;\; \rightarrow \;\;\; F^{APC}_{ij} &= F_{ij} - \frac{F_{i.}F_{.j}}{F_{..}}
 \end{equation*}
 \end{frame}
 
-\begin{frame}[label={sec:org26cf2a1}]{DCA learning technique}
+\begin{frame}[label={sec:org5d7f7b8}]{DCA learning technique}
 \begin{block}{Turn into an optimization procedure}
 \begin{itemize}
 \item Fit low-order statistics such as \(f_i\) and \(f_{ij}\): Find \(\mathcal{H}\) such that:
@@ -309,10 +309,10 @@ h_i(A) \leftarrow h_i(A) + \eta (\hat{f}_{i}(A) - f_i(A))
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org60d63a4}]{Sequence Generation using Random Markov Field}
+\begin{frame}[label={sec:org3696fe2}]{Sequence Generation using Random Markov Field}
 \begin{itemize}
-\item Sampling sequences: Predicting the rise of new protein variants or potential drug targets.
-\item Ensuring biological relevance: Validation against known structures in PDB.
+\item Sampling sequences: sampling new protein variants.
+\item Ensuring biological relevance: Satisfying coevolutionary constraints.
 \end{itemize}
 
 Perform mutations:

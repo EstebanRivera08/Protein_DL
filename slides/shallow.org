@@ -86,8 +86,8 @@ file:./img/pfam.png
 A \rightarrow \begin{pmatrix} 1\\ 0\\ \dots \\ 0\\ 0 \end{pmatrix},
 C \rightarrow \begin{pmatrix} 0\\ 1\\ \dots \\ 0\\ 0 \end{pmatrix},
 \dots
-G \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 1\\ 0 \end{pmatrix},
-U \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
+Y \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 1\\ 0 \end{pmatrix},
+W \rightarrow \begin{pmatrix} 0\\ 0\\ \dots \\ 0\\ 1 \end{pmatrix}.
 \end{split}
 \end{equation*}
   - Random projection
