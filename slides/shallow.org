@@ -25,7 +25,7 @@
 
 * MSA now
 
-** How to extract these fined-tuend proteins, and what to do?
+** How to extract these fined-tuned proteins, and what to do?
 
 #+BEGIN_CENTER
 \Large \textbf{Given a target natural function, search for natural counterparts}

@@ -1,4 +1,4 @@
-% Created 2023-10-23 Mon 22:52
+% Created 2023-10-23 Mon 23:25
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation,smaller]{beamer}
 \usepackage[utf8]{inputenc}
@@ -20,8 +20,8 @@
 
 
 \section*{Transitioning from ML to DL}
-\label{sec:org0509f3b}
-\begin{frame}[label={sec:org069d3a7}]{Why Deep Learning?}
+\label{sec:orgaccb087}
+\begin{frame}[label={sec:orga701860}]{Why Deep Learning?}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{itemize}
@@ -42,7 +42,7 @@
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org7edfec0}]{Application of DL in biology}
+\begin{frame}[label={sec:orgcc428a4}]{Application of DL in biology}
 \begin{center}
 \Large AlphaFold, AI to predict the fold of globular proteins at the experimental accuracy
 \end{center}
@@ -55,12 +55,12 @@ J. Jumper \emph{et al}, 2020, Nature
 (And \textgreater{} 50 years of data collection)
 \end{frame}
 
-\begin{frame}[label={sec:org937b50e}]{What are the DL techniques used in protein sequence generation?}
+\begin{frame}[label={sec:org8d68e35}]{What are the DL techniques used in protein sequence generation?}
 \begin{center}
 \Large \textbf{Generative models to sample sequences}
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:orgc8aec73}]{Deep Generative Models}
+\begin{frame}[label={sec:org35d3cc9}]{Deep Generative Models}
 \begin{itemize}
 \item \alert{\alert{VAEs}}: Probabilistic; encoder-decoder structure.
 \item \alert{\alert{GANs}}: Generator vs. discriminator competition.
@@ -77,7 +77,7 @@ J. Jumper \emph{et al}, 2020, Nature
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgce52ea2}]{Variational Autoencoders (VAEs) in Protein Design}
+\begin{frame}[label={sec:orgf2e4154}]{Variational Autoencoders (VAEs) in Protein Design}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{itemize}
@@ -97,7 +97,7 @@ J. Jumper \emph{et al}, 2020, Nature
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org8bd5adb}]{Variational autoencoder framework [Ding \emph{et al}, 2020, Nat. Com.]}
+\begin{frame}[label={sec:org97d1118}]{Variational autoencoder framework [Ding \emph{et al}, 2020, Nat. Com.]}
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/vae_scheme.png}
 \end{center}
@@ -115,7 +115,7 @@ J. Jumper \emph{et al}, 2020, Nature
 \end{equation}
 \end{frame}
 
-\begin{frame}[label={sec:org1b6ec9e}]{Training of a VAE}
+\begin{frame}[label={sec:orgd96c46e}]{Training of a VAE}
 \begin{block}{Architecture chosen by 5-fold cross validation}
 \begin{itemize}
 \item 1 \texttimes{} hidden (linear) layer fully connected (Encoder and Decoder)
@@ -126,7 +126,7 @@ J. Jumper \emph{et al}, 2020, Nature
 \end{block}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
-\begin{block}{Training paramerters}
+\begin{block}{Training parameters}
 \begin{itemize}
 \item Re-weigting sequences (reduce redundancy and emphasize diversity)
 \item 10\textsuperscript{4} optimization steps (ADAM optimizer)
@@ -146,14 +146,14 @@ J. Jumper \emph{et al}, 2020, Nature
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org039d4e1}]{Use a structure predictor to deduce sequences}
+\begin{frame}[label={sec:orga8f7525}]{Use a structure predictor to deduce sequences}
 \begin{center}
 \Large \textbf{AlphaFold is so good at predicting the structure, can't we just invert it?}
 Yes, we can!
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:org3b09c64}]{AlphaFold structure prediction}
+\begin{frame}[label={sec:org3bf0ce0}]{AlphaFold structure prediction}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/AlphaFold_2.png}
 \end{center}
@@ -163,7 +163,7 @@ geometric information \(\rightarrow\) Any parameter on the way is differentiable
 even the input sequences.
 \end{frame}
 
-\begin{frame}[label={sec:orgfae0ef0}]{AlphaFold: inverting the prediction}
+\begin{frame}[label={sec:org9e25b3f}]{AlphaFold: inverting the prediction}
 Prediction of a structure's fold.
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/af_1.png}
@@ -171,7 +171,7 @@ Prediction of a structure's fold.
 
 (J. Jumper \emph{et al}, 2020, Nature)
 \end{frame}
-\begin{frame}[label={sec:org5746914}]{AlphaFold: inverting the prediction}
+\begin{frame}[label={sec:orged23755}]{AlphaFold: inverting the prediction}
 Compare the prediction to the true structure and update accordingly the
 parameters of AlphaFold using the \alert{gradient} of the loss function.
 
@@ -180,7 +180,7 @@ parameters of AlphaFold using the \alert{gradient} of the loss function.
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgc15257d}]{AlphaFold: inverting the prediction}
+\begin{frame}[label={sec:org3cc5d15}]{AlphaFold: inverting the prediction}
 \alert{\alert{To design}}: use the gradient with respect to the input only to search for
 sequences that give the correct fold.
 
@@ -189,7 +189,7 @@ sequences that give the correct fold.
 \end{center}
 (Norm \emph{et al}, 2021, PNAS)
 \end{frame}
-\begin{frame}[label={sec:org84ac002}]{Reverting AlphaFold}
+\begin{frame}[label={sec:org9f15376}]{Reverting AlphaFold}
 Encode the structure into distance matrices (D\textsubscript{i,j} = distance between residues
 i and j).
 \begin{center}
@@ -197,7 +197,7 @@ i and j).
 \end{center}
 (Norm \emph{et al}, 2021, PNAS)
 \end{frame}
-\begin{frame}[label={sec:orgc87f744}]{Why doing so?}
+\begin{frame}[label={sec:org1e915fb}]{Why doing so?}
 \begin{itemize}
 \item Positive design: searching for sequences that fold into the target structure.
 \item Negative design: searching for sequences that fold \alert{only} into the target structure.
@@ -210,20 +210,20 @@ i and j).
 (Norm \emph{et al}, 2021, PNAS)
 \end{frame}
 
-\begin{frame}[label={sec:org88e2d38}]{Graph neural network to model the structure}
+\begin{frame}[label={sec:orgfb54203}]{Graph neural network to model the structure}
 \begin{center}
 \Large \textbf{Represent protein structures using graph neural networks}
 Yes, we can!
 \end{center}
 \end{frame}
-\begin{frame}[label={sec:org5c42045}]{Design proteins conditioned on the structure}
+\begin{frame}[label={sec:org9925c99}]{Design proteins conditioned on the structure}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/proteinmpnn.jpg}
 \end{center}
 [Dauparas \emph{et al}, Science, 2022]
 \end{frame}
 
-\begin{frame}[label={sec:org59a5771}]{Graph neural network}
+\begin{frame}[label={sec:org6b021a6}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -240,7 +240,7 @@ Yes, we can!
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgb6b451d}]{Graph neural network}
+\begin{frame}[label={sec:orgfe7af76}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -256,7 +256,7 @@ Yes, we can!
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org31a7a4a}]{Graph neural network}
+\begin{frame}[label={sec:orgb35c8f5}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -272,7 +272,7 @@ Yes, we can!
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org80836fa}]{Graph neural network}
+\begin{frame}[label={sec:orgdb9d391}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -288,7 +288,7 @@ Yes, we can!
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org0c00959}]{Graph neural network}
+\begin{frame}[label={sec:orgee81abd}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -304,7 +304,7 @@ Yes, we can!
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org88c2622}]{Graph neural network}
+\begin{frame}[label={sec:org433dcd5}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -320,7 +320,7 @@ Yes, we can!
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:org3afd185}]{Graph neural network}
+\begin{frame}[label={sec:org6788450}]{Graph neural network}
 \begin{columns}
 \begin{column}{1\columnwidth}
 \begin{center}
@@ -333,7 +333,7 @@ the binding free energy to a protein target.
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgd1f49bd}]{Graph neural network}
+\begin{frame}[label={sec:orgd269e86}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}
@@ -351,7 +351,7 @@ Mask the identity of one atom\ldots{}
 \end{column}
 \end{columns}
 \end{frame}
-\begin{frame}[label={sec:orga22fad1}]{Graph neural network}
+\begin{frame}[label={sec:orge0d67a6}]{Graph neural network}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{center}

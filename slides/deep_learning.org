@@ -97,7 +97,7 @@ file:img/vae_scheme.png
 :PROPERTIES:
 :BEAMER_ENV: ignoreheading
 :END:
-**** Training paramerters
+**** Training parameters
 :PROPERTIES:
 :BEAMER_COL: 0.5
 :BEAMER_ENV: block
