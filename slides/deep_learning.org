@@ -168,7 +168,6 @@ file:./img/af_landscape_optimization.png
 
 #+BEGIN_CENTER
 \Large \textbf{Represent protein structures using graph neural networks}
-Yes, we can!
 #+END_CENTER
 ** Design proteins conditioned on the structure
 
