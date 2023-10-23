@@ -260,8 +260,8 @@ file:./img/enzyme_struct.png
 file:./img/reaction_pathway.png
 
 *** Define the optimization problem
-- Binder: find mutations that improve the binding $\Delta_{b}$
-- Cata: find mutations that improve the catalysis $\Delta^{\ddagger}$
+- Binder: find mutations that improve the binding $\Delta G_{b}$
+- Catalyzer: find mutations that improve the catalysis $\Delta G^{\ddagger}$
 
 ** Designing a strong binder
 
