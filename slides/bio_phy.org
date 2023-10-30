@@ -92,7 +92,7 @@ file:./img/s1_f2.png
 **** The Essence of Folding: Free Energy
 
 Protein folding is driven by changes in free energy.
-Equation: \Delta G = \Delta H + T \Delta S
+Equation: \Delta G = \Delta H - T \Delta S
 
 **** Visualizing the Folding Process
 

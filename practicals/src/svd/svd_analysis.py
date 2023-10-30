@@ -28,17 +28,6 @@ def plot_pca(pi, pj, pca_f, col=None):
     pca_f.set_aspect(1)
 
 
-def contact_prediction(vht, frac=0.5):
-    len_seq = vht.shape[0]//len(NUC)
-    pairwise = zeros((len_seq, len_seq))
-    ppi = [i for i in range(len(NUC)) for j in range(len(NUC)) if i != j]
-    ppj = [j for i in range(len(NUC)) for j in range(len(NUC)) if i != j]
-    for pi in range(int(vht.shape[1]*frac)):
-        vec_1 = vht[:, pi].reshape(len_seq, len(NUC))
-        pairwise += (vec_1[:, ppi] @ vec_1[:, ppj].T)
-    return pairwise
-
-
 def SVD(sequences, ref_seq=None, trim=False, bmsa=False, reweight=False,
         center_ref=True, no_centering=False):
     "sequences = dictionary {name: seq}"
@@ -73,10 +62,3 @@ def SVD(sequences, ref_seq=None, trim=False, bmsa=False, reweight=False,
         return u * s, svd_out, pca_dir, enc_seq
     else:
         return u * s, svd_out, pca_dir
-
-
-def apc(inp):
-    a1 = inp.sum(-1, keepdims=True)  # type: ignore
-    a2 = inp.sum(-2, keepdims=True)  # type: ignore
-    corr = inp - (a1 * a2) / inp.sum((-1, -2), keepdims=True)  # type: ignore
-    return corr

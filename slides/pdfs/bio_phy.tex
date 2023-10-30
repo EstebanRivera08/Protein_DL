@@ -1,4 +1,4 @@
-% Created 2023-10-23 Mon 23:06
+% Created 2023-10-30 Mon 17:35
 % Intended LaTeX compiler: pdflatex
 \documentclass[presentation,smaller]{beamer}
 \usepackage[utf8]{inputenc}
@@ -25,15 +25,15 @@
 
 
 \section*{Introduction}
-\label{sec:orgb39bbfb}
+\label{sec:orgf60894a}
 
-\begin{frame}[label={sec:org7e66341}]{Protein Design}
+\begin{frame}[label={sec:org1a25345}]{Protein Design}
 \begin{center}
 \Large\textbf{Engineer proteins for desirable properties}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgc90822e}]{Experimental Approaches}
+\begin{frame}[label={sec:org876a0c1}]{Experimental Approaches}
 \begin{itemize}
 \item Techniques such as directed evolution, phage display, and yeast display.
 \item Iterative process of mutation and selection in directed evolution.
@@ -46,7 +46,7 @@
 \end{center}
 (credits wiki directed evolution)
 \end{frame}
-\begin{frame}[label={sec:org7538c8f}]{Computational Protein Design}
+\begin{frame}[label={sec:orgfa49bf7}]{Computational Protein Design}
 \begin{itemize}
 \item Tools like Rosetta and FoldX for structure prediction and design.
 \item Enables rapid exploration of vast sequence and conformational spaces.
@@ -55,7 +55,7 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label={sec:org748967d}]{Why Computational Design is Desirable}
+\begin{frame}[label={sec:orgd7412f5}]{Why Computational Design is Desirable}
 \begin{itemize}
 \item \alert{\alert{Speed}}: Computational methods can quickly scan vast design spaces.
 \begin{itemize}
@@ -70,7 +70,7 @@ v. universe|
 \end{frame}
 
 
-\begin{frame}[label={sec:orgd2df877}]{The Problem: Physics-Based Approach}
+\begin{frame}[label={sec:org6b95476}]{The Problem: Physics-Based Approach}
 \begin{block}{Definition}
 \begin{itemize}
 \item Predict 3D protein structures from sequences.
@@ -96,7 +96,7 @@ v. universe|
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgbd41143}]{Protein Design Principles}
+\begin{frame}[label={sec:org4ef97f1}]{Protein Design Principles}
 \begin{block}{The Core Challenge: Optimization}
 Objective: Design protein sequences to achieve specific structures and functions.
 \begin{block}{Starting Point: Known Structures}
@@ -114,12 +114,12 @@ Inverse Folding (Design): For a desired structure, determine or design the optim
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgebc87a4}]{Design = inverse protein design}
+\begin{frame}[label={sec:orgef5e774}]{Design = inverse protein design}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{block}{The Essence of Folding: Free Energy}
 Protein folding is driven by changes in free energy.
-Equation: \(\Delta\) G = \(\Delta\) H + T \(\Delta\) S
+Equation: \(\Delta\) G = \(\Delta\) H - T \(\Delta\) S
 \end{block}
 
 \begin{block}{Visualizing the Folding Process}
@@ -136,7 +136,7 @@ Proteins transition from a less ordered (unfolded) state to a highly ordered
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org2714c43}]{Usually not realistic}
+\begin{frame}[label={sec:orgfa85518}]{Usually not realistic}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/s1_f4.png}
 \end{center}
@@ -144,7 +144,7 @@ Proteins transition from a less ordered (unfolded) state to a highly ordered
 (credits Pr. F. Noe, F. U. Berlin)
 \end{frame}
 
-\begin{frame}[label={sec:orgabdd180}]{Usual timescale for the folding process}
+\begin{frame}[label={sec:org858a799}]{Usual timescale for the folding process}
 \begin{center}
 \includegraphics[width=0.6\textwidth]{./img/time_scale.png}
 \end{center}
@@ -153,7 +153,7 @@ Interesting phenomena take time
 (credits Werner, Tim, et al. Advanced drug delivery reviews (2012))
 \end{frame}
 
-\begin{frame}[label={sec:orge7e4632}]{Exploring Protein Conformations}
+\begin{frame}[label={sec:org4cee387}]{Exploring Protein Conformations}
 \begin{block}{The Challenge of Flexibility}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
@@ -188,7 +188,7 @@ of rotamer libraries: Discretized conformations for amino acid side chains.
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgf8c2839}]{Navigating the Protein Sequence Space}
+\begin{frame}[label={sec:org8e2f174}]{Navigating the Protein Sequence Space}
 \begin{block}{Probabilistic Approaches}
 Delve into the vast sequence space using stochastic methods.
 \begin{itemize}
@@ -206,7 +206,7 @@ pinpoint the Global Minimum Energy Conformation (GMEC).
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org4e2aa4e}]{Understanding the Unfolded State}
+\begin{frame}[label={sec:org78512e5}]{Understanding the Unfolded State}
 \begin{block}{Modeling Exposed Residues}
 \begin{itemize}
 \item In the unfolded state, residues are fully exposed \(\implies\) no interactions.
@@ -229,9 +229,9 @@ pinpoint the Global Minimum Energy Conformation (GMEC).
 \end{frame}
 
 \section*{Computational protein design: for the fold}
-\label{sec:orgf55034d}
+\label{sec:org58cda33}
 
-\begin{frame}[label={sec:org9081777}]{Test case: redesigning the PDZ fold}
+\begin{frame}[label={sec:orgee4897f}]{Test case: redesigning the PDZ fold}
 \begin{block}{The target fold: PDZ}
 \begin{itemize}
 \item PDZ domains are protein structural domains that are often found in signaling
@@ -251,7 +251,7 @@ protein-protein interactions.
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org4f96ee4}]{Sampling sequences}
+\begin{frame}[label={sec:org8443889}]{Sampling sequences}
 \begin{block}{The model}
 \begin{itemize}
 \item MM + Implicit model + Empirical unfolded model
@@ -269,7 +269,7 @@ protein-protein interactions.
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:orgcabd834}]{MD simulations}
+\begin{frame}[label={sec:org3d33dd1}]{MD simulations}
 You actually don't fold them as the folding is too expensive
 
 \begin{center}
@@ -287,13 +287,13 @@ For each selected sequence: 1) Solvate then 2) simulate for stability.
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org5b12d04}]{Computational enzyme design}
+\begin{frame}[label={sec:orgb2d635a}]{Computational enzyme design}
 \begin{center}
 \Large\textbf{Design for the binding or catalysis}
 \end{center}
 \end{frame}
 
-\begin{frame}[label={sec:orgcb3a6ec}]{The problem definition}
+\begin{frame}[label={sec:org0007ddd}]{The problem definition}
 \begin{columns}
 \begin{column}{0.5\columnwidth}
 \begin{block}{Definition of the problem}
@@ -318,7 +318,7 @@ Develop enzymes:
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:org26ceeb9}]{The energy bottleneck}
+\begin{frame}[label={sec:org25e060b}]{The energy bottleneck}
 \begin{block}{The reaction pathway}
 \begin{itemize}
 \item The series of molecular events during a reaction.
@@ -337,7 +337,7 @@ Develop enzymes:
 \end{block}
 \end{frame}
 
-\begin{frame}[label={sec:org42a2832}]{Designing a strong binder}
+\begin{frame}[label={sec:orgcd28d5a}]{Designing a strong binder}
 \begin{columns}
 \begin{column}{0.6\columnwidth}
 \begin{block}{MetRS: binding unatural ligand}
@@ -365,7 +365,7 @@ Develop enzymes:
 \end{columns}
 \end{frame}
 
-\begin{frame}[label={sec:orgf0b11b9}]{Designing catalysts: the transition state}
+\begin{frame}[label={sec:orgbf87261}]{Designing catalysts: the transition state}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./img/transition_state.png}
 \end{center}
@@ -376,9 +376,9 @@ Optimize the binding with the transition state to optimize the catalysis.
 \end{frame}
 
 \section*{Benefits and limitations}
-\label{sec:org90bf4cd}
+\label{sec:orgbca1eae}
 
-\begin{frame}[label={sec:org9ad26f4}]{Conclusion: Computational Protein Design - A Paradigm Shift}
+\begin{frame}[label={sec:orgafaa3e2}]{Conclusion: Computational Protein Design - A Paradigm Shift}
 \begin{block}{Key Takeaways}
 \begin{itemize}
 \item \alert{\alert{Computational vs. Experimental}}: Computational methods offer speed, precision, and cost-effectiveness, complementing experimental techniques like directed evolution.

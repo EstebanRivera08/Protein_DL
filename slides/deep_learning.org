@@ -169,6 +169,7 @@ file:./img/af_landscape_optimization.png
 #+BEGIN_CENTER
 \Large \textbf{Represent protein structures using graph neural networks}
 #+END_CENTER
+
 ** Design proteins conditioned on the structure
 
 file:./img/proteinmpnn.jpg
